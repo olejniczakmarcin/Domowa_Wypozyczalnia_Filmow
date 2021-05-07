@@ -1,0 +1,59 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="KinoAPPModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="Employee">
+    <Key>
+      <PropertyRef Name="IdEmpl" />
+    </Key>
+    <Property Name="IdEmpl" Type="int" Nullable="false" />
+    <Property Name="Name" Type="varchar" MaxLength="50" />
+    <Property Name="Surname" Type="varchar" MaxLength="50" />
+    <Property Name="DateOfEmpl" Type="varchar" MaxLength="50" />
+  </EntityType>
+  <EntityType Name="MovieDescription">
+    <Key>
+      <PropertyRef Name="MovieId" />
+    </Key>
+    <Property Name="MovieId" Type="int" Nullable="false" />
+    <Property Name="Desciption" Type="nvarchar(max)" />
+    <Property Name="Time" Type="float" />
+    <Property Name="Scale" Type="int" />
+  </EntityType>
+  <EntityType Name="Users">
+    <Key>
+      <PropertyRef Name="UserId" />
+    </Key>
+    <Property Name="UserId" Type="int" Nullable="false" />
+    <Property Name="Login" Type="varchar" MaxLength="50" />
+    <Property Name="Password" Type="varchar" MaxLength="50" />
+    <Property Name="Name" Type="varchar" MaxLength="50" />
+    <Property Name="Surname" Type="varchar" MaxLength="50" />
+    <Property Name="PhoneNumber" Type="varchar" MaxLength="50" />
+    <Property Name="Email" Type="varchar" MaxLength="100" />
+  </EntityType>
+  <!--Errors Found During Generation:
+warning 6002: The table/view 'KinoAPP.dbo.UsersMovie' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+  <EntityType Name="UsersMovie">
+    <Key>
+      <PropertyRef Name="UserId" />
+    </Key>
+    <Property Name="UserId" Type="int" Nullable="false" />
+    <Property Name="MovieId" Type="int" Nullable="false" />
+    <Property Name="MovieName" Type="varchar" MaxLength="50" />
+    <Property Name="Price" Type="float" />
+    <Property Name="IsWatched" Type="bit" />
+  </EntityType>
+  <EntityContainer Name="KinoAPPModelStoreContainer">
+    <EntitySet Name="Employee" EntityType="Self.Employee" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="MovieDescription" EntityType="Self.MovieDescription" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Users" EntityType="Self.Users" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="UsersMovie" EntityType="Self.UsersMovie" store:Type="Tables" store:Schema="dbo">
+      <DefiningQuery>SELECT 
+    [UsersMovie].[UserId] AS [UserId], 
+    [UsersMovie].[MovieId] AS [MovieId], 
+    [UsersMovie].[MovieName] AS [MovieName], 
+    [UsersMovie].[Price] AS [Price], 
+    [UsersMovie].[IsWatched] AS [IsWatched]
+    FROM [dbo].[UsersMovie] AS [UsersMovie]</DefiningQuery>
+    </EntitySet>
+  </EntityContainer>
+</Schema>

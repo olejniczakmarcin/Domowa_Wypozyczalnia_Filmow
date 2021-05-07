@@ -1,0 +1,109 @@
+﻿@model KinoApp.Areas.Kino.Models.UsersModel
+@{
+    ViewBag.Title = "User-Movie- Information";
+}
+<head>
+
+    @Scripts.Render("~/bundles/modernizr")
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/jqgrid")
+</head>
+<style>
+    .window {
+        background-image: url('https://www.vogue.pl/uploads/repository/newsy/kina-czerwiec-main.jpg');
+        background-repeat: no-repeat;
+        background-size: 100% 100%;
+        background-attachment: fixed;
+    }
+    .tab-postion{
+        position:absolute;
+        top:20%;
+        left:30%;
+    }
+    .user-info{
+        position:absolute;
+        left:20px;
+        top:20%;
+    }
+</style>
+<body class="window">
+    <div class="user-info" style="color:antiquewhite;">
+        <div style="font-weight:bold; font-size:28px;">User Information</div>
+        <div><img src="~/Areas/Kino/Images/awatar.png"/></div>
+        <div style="margin-left:80px; font-size:22px;"><strong>Name</strong></div>
+        <div style="margin-left:80px;">
+            @if(Model != null)
+            {
+                @Model.Name;
+            }
+            else
+            {
+                <strong>No data about user</strong>
+            }
+        </div>
+        <div style="margin-left:80px; font-size:22px;"><strong>Surname</strong></div>
+        <div style="margin-left:80px;">
+            @if(Model != null)
+            {
+                @Model.Surname
+            }
+            else
+            {
+                <strong>No data about user</strong>
+            }
+        </div>
+    </div>
+    <div class="tab-postion">
+        <table id="tableMovie"></table>
+        <div id="pager"></div>
+    </div>
+</body>
+<script type="text/javascript">
+
+    function FormatterWatched(cellvalue, options, rowObject) {
+        var retval = cellvalue;
+        if (rowObject['IsWatched'] == true) {
+            return 'Watched';
+        }
+        else {
+            return 'No watched'
+        }
+    }
+    $(function () {
+        $("#tableMovie").jqGrid({
+            url: '@Url.Action("GetDataToTable", "UserFilms",new { area = "Kino" })',
+            datatype: 'json',
+            mtype: 'POST',
+            colNames: ['Id', 'Name', 'Price', 'IsWatched'],
+            colModel: [
+                { name: 'MovieId', index: 'MovieId', width: 50, sortable: true, align: 'center' },
+                { name: 'MovieName', index: 'MovieName', width: 100, sortable: true, align: 'center' },
+                { name: 'Price', index: 'Price', width: 100, sortable: true, align: 'center' },
+                { name: 'IsWatched', index: 'IsWatched', width: 100, sortable: true, align: 'center', formatter: FormatterWatched },
+            ],
+            jsonReader: {
+                root: "rows",
+                page: "page",
+                total: "total",
+                records: "records",
+                repeatitems: false,
+                Id : "0"
+            },
+            pager: '#pager',
+            viewrecords :true,
+            rowNum: 20,
+            rowList: [20, 40, 60, 80],
+            sortname: 'Id',
+            sortorder: "asc",
+            shrinkToFit: true,
+            subGrid:true,
+            width: 800,
+            height: 'auto',
+            caption: 'Users movie history list',
+            subGridRowExpanded: function (subgridDivId, rowId) {
+                celValue = $("#tableMovie").jqGrid('getCell', rowId, 'MovieId');
+                $('#tableMovie_' + rowId).load('@Url.Action("PartialMovieDescription", "UserFilms", new { area = "Kino" })' + '/' + celValue);
+            },
+        });
+    });
+</script>

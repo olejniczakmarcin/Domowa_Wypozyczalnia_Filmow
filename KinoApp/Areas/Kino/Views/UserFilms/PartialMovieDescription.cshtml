@@ -1,0 +1,64 @@
+﻿@model KinoApp.Areas.Kino.Models.ModelMovieDescription
+@{
+    ViewBag.Title = "PartialMovieDescription";
+}
+
+<style>
+    .frame-block {
+        border: 2px groove cornflowerblue;
+        font-family: 'Times New Roman', Times, serif;
+        background-color: aquamarine;
+        margin-left: 5px;
+        margin-bottom: 5px;
+        font-weight: bold;
+    }
+    .frame-text {
+        border: 2px groove cornflowerblue;
+        font-family: 'Times New Roman', Times, serif;
+        background-color: blanchedalmond;
+        margin-left: 5px;
+        margin-bottom: 5px;
+    }
+</style>
+
+<div>
+    <div class="frame-block">
+    Movie Description
+    </div>
+    <div class="frame-text">
+        @if(Model != null)
+        {
+            @Model.Description
+        }
+        else
+            {
+                <span><strong>No data to display</strong></span>
+            }
+    </div>
+    <div class="frame-block">
+        Your opinion
+    </div>
+    <div class="frame-text">
+        @if (Model != null)
+        {
+            @Model.Scale
+        }
+        else
+        {
+            <span><strong>No data to display</strong></span>
+        }
+    </div>
+    <div class="frame-block">
+        Duration of the video
+    </div>
+    <div class="frame-text">
+        @if (Model != null)
+        {
+            @Model.Time
+        }
+        else
+        {
+            <span><strong>No data to display</strong></span>
+        }
+    </div>
+</div>
