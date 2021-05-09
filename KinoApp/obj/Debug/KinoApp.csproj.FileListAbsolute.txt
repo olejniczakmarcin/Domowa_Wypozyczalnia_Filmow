@@ -100,3 +100,4 @@ D:\Projekty\Kino\KinoApp\KinoApp\obj\Debug\KinoApp.csproj.CoreCompileInputs.cach
 D:\Projekty\Kino\KinoApp\KinoApp\obj\Debug\KinoApp.csproj.CopyComplete
 D:\Projekty\Kino\KinoApp\KinoApp\obj\Debug\KinoApp.dll
 D:\Projekty\Kino\KinoApp\KinoApp\obj\Debug\KinoApp.pdb
+D:\Projekty\Kino\KinoApp\KinoApp\obj\Debug\KinoApp.csprojAssemblyReference.cache
